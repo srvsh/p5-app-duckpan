@@ -108,7 +108,8 @@ sub run {
 		ia_package_name   => $package_name,
 		ia_name_separated => $separated_name,
 		lia_name          => $lc_name,
-		ia_path           => $filepath
+		ia_path           => $filepath,
+        lia_id            => $lc_name,
 	);
 
 	# Ask which optional templates to create
