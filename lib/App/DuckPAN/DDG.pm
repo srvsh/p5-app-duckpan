@@ -106,6 +106,15 @@ sub get_blocks_from_current_dir {
 				}
 			}
         } else {
+            eval {
+                # this is inside 'eval' since loading the class could have failed
+                # before the 'is_dev_essential' subroutine was installed into it
+                if ($class->is_dev_essential) {
+                    $self->app->emit_debug("'$class' is essential for instant answer development but it failed to load.");
+                    $self->app->emit_and_exit(1, "[$class] $load_error_message");
+                }
+            };
+
             # Get the module name that needs to be installed by the user.
             if ($load_error_message =~ /Can't locate ([^\.]+).pm in \@INC/) {
                 $load_error_message = $1;
